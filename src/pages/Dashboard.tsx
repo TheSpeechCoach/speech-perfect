@@ -20,16 +20,17 @@ export default function Dashboard() {
     if (!user) return;
     (async () => {
       const [{ data: p }, { data: s }, { data: scores }] = await Promise.all([
-        supabase.from("profiles").select("*, programmes:current_programme_id(id,title,weeks,daily_sessions)").eq("id", user.id).maybeSingle(),
+        supabase.from("profiles").select("*").eq("id", user.id).maybeSingle(),
         supabase.from("streaks").select("*").eq("user_id", user.id).maybeSingle(),
         supabase.from("session_scores").select("*, sessions(started_at)").eq("user_id", user.id).order("created_at", { ascending: false }).limit(6),
       ]);
       setProfile(p); setStreak(s);
       setLatest(scores?.[0] || null);
       setRecent(scores || []);
-      if (p?.programmes) {
-        setProgramme(p.programmes);
-        const { data: u } = await supabase.from("user_programmes").select("*").eq("user_id", user.id).eq("programme_id", p.programmes.id).eq("active", true).maybeSingle();
+      if (p?.current_programme_id) {
+        const { data: prog } = await supabase.from("programmes").select("*").eq("id", p.current_programme_id).maybeSingle();
+        setProgramme(prog);
+        const { data: u } = await supabase.from("user_programmes").select("*").eq("user_id", user.id).eq("programme_id", p.current_programme_id).eq("active", true).maybeSingle();
         setUp(u);
       }
     })();
