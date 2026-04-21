@@ -14,7 +14,299 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          confidence_level: number | null
+          created_at: string
+          current_programme_id: string | null
+          full_name: string | null
+          goal: string | null
+          id: string
+          onboarded: boolean
+          role: string | null
+          scenarios: string[] | null
+          updated_at: string
+        }
+        Insert: {
+          confidence_level?: number | null
+          created_at?: string
+          current_programme_id?: string | null
+          full_name?: string | null
+          goal?: string | null
+          id: string
+          onboarded?: boolean
+          role?: string | null
+          scenarios?: string[] | null
+          updated_at?: string
+        }
+        Update: {
+          confidence_level?: number | null
+          created_at?: string
+          current_programme_id?: string | null
+          full_name?: string | null
+          goal?: string | null
+          id?: string
+          onboarded?: boolean
+          role?: string | null
+          scenarios?: string[] | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      programmes: {
+        Row: {
+          created_at: string
+          daily_sessions: number
+          description: string
+          id: string
+          slug: string
+          sort_order: number
+          target_outcomes: string[]
+          title: string
+          weeks: number
+        }
+        Insert: {
+          created_at?: string
+          daily_sessions: number
+          description: string
+          id?: string
+          slug: string
+          sort_order?: number
+          target_outcomes?: string[]
+          title: string
+          weeks: number
+        }
+        Update: {
+          created_at?: string
+          daily_sessions?: number
+          description?: string
+          id?: string
+          slug?: string
+          sort_order?: number
+          target_outcomes?: string[]
+          title?: string
+          weeks?: number
+        }
+        Relationships: []
+      }
+      session_exercises: {
+        Row: {
+          audio_path: string | null
+          created_at: string
+          duration_seconds: number
+          exercise_type: string
+          id: string
+          prompt: string | null
+          session_id: string
+          transcript: string | null
+          user_id: string
+        }
+        Insert: {
+          audio_path?: string | null
+          created_at?: string
+          duration_seconds?: number
+          exercise_type: string
+          id?: string
+          prompt?: string | null
+          session_id: string
+          transcript?: string | null
+          user_id: string
+        }
+        Update: {
+          audio_path?: string | null
+          created_at?: string
+          duration_seconds?: number
+          exercise_type?: string
+          id?: string
+          prompt?: string | null
+          session_id?: string
+          transcript?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "session_exercises_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      session_scores: {
+        Row: {
+          avg_sentence_length: number
+          clarity: number
+          created_at: string
+          feedback: Json
+          filler: number
+          filler_count: number
+          id: string
+          overall: number
+          pace: number
+          session_id: string
+          structure: number
+          user_id: string
+          wpm: number
+        }
+        Insert: {
+          avg_sentence_length?: number
+          clarity: number
+          created_at?: string
+          feedback?: Json
+          filler: number
+          filler_count?: number
+          id?: string
+          overall: number
+          pace: number
+          session_id: string
+          structure: number
+          user_id: string
+          wpm?: number
+        }
+        Update: {
+          avg_sentence_length?: number
+          clarity?: number
+          created_at?: string
+          feedback?: Json
+          filler?: number
+          filler_count?: number
+          id?: string
+          overall?: number
+          pace?: number
+          session_id?: string
+          structure?: number
+          user_id?: string
+          wpm?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "session_scores_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sessions: {
+        Row: {
+          completed_at: string | null
+          duration_seconds: number
+          id: string
+          programme_id: string | null
+          started_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          duration_seconds?: number
+          id?: string
+          programme_id?: string | null
+          started_at?: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          duration_seconds?: number
+          id?: string
+          programme_id?: string | null
+          started_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sessions_programme_id_fkey"
+            columns: ["programme_id"]
+            isOneToOne: false
+            referencedRelation: "programmes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      streaks: {
+        Row: {
+          current_streak: number
+          last_session_date: string | null
+          longest_streak: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          current_streak?: number
+          last_session_date?: string | null
+          longest_streak?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          current_streak?: number
+          last_session_date?: string | null
+          longest_streak?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      subscriptions: {
+        Row: {
+          current_period_end: string | null
+          status: string
+          tier: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          current_period_end?: string | null
+          status?: string
+          tier?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          current_period_end?: string | null
+          status?: string
+          tier?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_programmes: {
+        Row: {
+          active: boolean
+          completed_sessions: number
+          id: string
+          programme_id: string
+          started_at: string
+          user_id: string
+        }
+        Insert: {
+          active?: boolean
+          completed_sessions?: number
+          id?: string
+          programme_id: string
+          started_at?: string
+          user_id: string
+        }
+        Update: {
+          active?: boolean
+          completed_sessions?: number
+          id?: string
+          programme_id?: string
+          started_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_programmes_programme_id_fkey"
+            columns: ["programme_id"]
+            isOneToOne: false
+            referencedRelation: "programmes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
