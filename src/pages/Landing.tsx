@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Mic, ArrowRight, Activity, Gauge, Layers, ShieldCheck, Check } from "lucide-react";
+import { Mic, ArrowRight, Activity, Gauge, Layers, ShieldCheck, Check, Repeat, LineChart, Target } from "lucide-react";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 
@@ -43,21 +43,19 @@ export default function Landing() {
       <section className="pt-36 pb-24 container-page">
         <div className="grid md:grid-cols-12 gap-10 items-end">
           <div className="md:col-span-8">
-            <div className="eyebrow mb-6">SpeechOS — v1.0 · Performance training</div>
+            <div className="eyebrow mb-6">SpeechOS — Performance speech training</div>
             <h1 className="font-display text-[44px] leading-[1.02] sm:text-6xl md:text-7xl tracking-tight">
-              Train the way you <span className="italic">speak.</span><br/>
-              Daily. <span className="text-accent">Measurable.</span>
+              Train your speech <span className="italic">like performance.</span>
             </h1>
             <p className="mt-8 text-lg text-muted-foreground max-w-2xl">
-              SpeechOS is a daily training system for clearer, faster, more authoritative speech.
-              Record. Analyse. Improve. No fluff. No motivational posters. Just a measurable scoreboard for your voice.
+              Daily speaking drills, real-time analysis, and measurable improvement for people who need to think clearly and speak well under pressure.
             </p>
             <div className="mt-10 flex flex-wrap gap-3">
               <Link to="/auth/sign-up" className="inline-flex items-center gap-2 bg-foreground text-background px-6 py-3.5 hover:bg-accent transition-colors">
-                Start your first session <ArrowRight className="h-4 w-4" />
+                Start training <ArrowRight className="h-4 w-4" />
               </Link>
               <a href="#how" className="inline-flex items-center gap-2 px-6 py-3.5 border border-foreground hover:bg-foreground hover:text-background transition-colors">
-                How it works
+                See how it works
               </a>
             </div>
             <div className="mt-10 flex items-center gap-6 text-xs font-mono uppercase tracking-widest text-muted-foreground">
@@ -65,7 +63,7 @@ export default function Landing() {
               <span>·</span>
               <span>5-min daily sessions</span>
               <span className="hidden sm:inline">·</span>
-              <span className="hidden sm:inline">Cancel anytime</span>
+              <span className="hidden sm:inline">Measured every rep</span>
             </div>
           </div>
           <div className="md:col-span-4">
@@ -96,12 +94,19 @@ export default function Landing() {
       <section id="why" className="hairline border-t border-[hsl(var(--hairline))]">
         <div className="container-page py-24">
           <div className="eyebrow mb-3">Why SpeechOS</div>
-          <h2 className="font-display text-4xl md:text-5xl max-w-3xl">Coaches teach. Books explain. <span className="italic">SpeechOS trains.</span></h2>
+          <h2 className="font-display text-4xl md:text-5xl max-w-3xl">
+            Most people don't get better at speaking. <span className="italic">They just keep speaking.</span>
+          </h2>
+          <p className="mt-6 max-w-3xl text-lg text-muted-foreground">
+            Reading books doesn't fix pace. Watching talks doesn't reduce fillers. One-off coaching fades within a week.
+            Speech is a motor skill. It improves the same way every other motor skill improves: deliberate reps, measured against a target, repeated daily.
+            SpeechOS is the system that makes that possible.
+          </p>
           <div className="grid md:grid-cols-3 gap-px bg-[hsl(var(--hairline))] mt-14 border border-[hsl(var(--hairline))]">
             {[
-              { t: "Daily reps", d: "Five focused minutes a day beats a one-off workshop. The voice trains like a muscle." },
-              { t: "Real numbers", d: "Pace, filler rate, sentence length, structure. Scores you can move on a chart." },
-              { t: "No fluff", d: "No mood boards. No mantras. Drills, scores, feedback. Then you do it again tomorrow." },
+              { t: "Systematic reps", d: "Five focused minutes a day. Structured drills, not vague practice." },
+              { t: "Hard numbers", d: "Pace, filler rate, sentence length, structure. Tracked every session." },
+              { t: "Targeted feedback", d: "Direct corrections after each session. No generic encouragement." },
             ].map(b => (
               <div key={b.t} className="bg-background p-8">
                 <div className="font-display text-3xl">{b.t}</div>
@@ -112,24 +117,81 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* HOW */}
+      {/* HOW IT WORKS */}
       <section id="how" className="hairline border-t border-[hsl(var(--hairline))]">
         <div className="container-page py-24">
           <div className="eyebrow mb-3">How it works</div>
-          <h2 className="font-display text-4xl md:text-5xl max-w-3xl">Three exercises. Five minutes. <span className="italic">Every day.</span></h2>
-          <div className="mt-14 grid md:grid-cols-3 gap-8">
+          <h2 className="font-display text-4xl md:text-5xl max-w-3xl">Record. Analyse. Improve. <span className="italic">Repeat.</span></h2>
+          <div className="mt-14 grid md:grid-cols-4 gap-px bg-[hsl(var(--hairline))] border border-[hsl(var(--hairline))]">
             {[
-              { n: "01", t: "Read aloud", d: "Warm up with a passage. Establishes baseline pace and clarity." , icon: Activity },
-              { n: "02", t: "Speak to prompt", d: "Answer a high-pressure prompt in 30 seconds. Trains structured thinking under load.", icon: Mic },
-              { n: "03", t: "Rephrase + deliver", d: "Take a messy sentence. Rewrite it. Say it. Sharpens spoken editing.", icon: Gauge },
+              { n: "01", t: "Record", d: "Run a five-minute session. Three drills, one take each.", icon: Mic },
+              { n: "02", t: "Analyse", d: "Real-time scoring on clarity, pace, fillers, and structure.", icon: Activity },
+              { n: "03", t: "Improve", d: "Direct feedback identifies the one thing to fix tomorrow.", icon: Target },
+              { n: "04", t: "Repeat", d: "Daily. Streaks compound. Scores move on the chart.", icon: Repeat },
             ].map(s => (
-              <div key={s.n} className="card-flat p-8">
+              <div key={s.n} className="bg-background p-8">
                 <div className="font-mono text-xs text-accent">{s.n}</div>
                 <s.icon className="h-6 w-6 mt-3" />
+                <div className="font-display text-2xl mt-4">{s.t}</div>
+                <p className="mt-3 text-sm text-muted-foreground">{s.d}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* DAILY TRAINING */}
+      <section className="hairline border-t border-[hsl(var(--hairline))] bg-[hsl(var(--surface-2))]">
+        <div className="container-page py-24">
+          <div className="eyebrow mb-3">Daily training</div>
+          <h2 className="font-display text-4xl md:text-5xl max-w-3xl">
+            Three exercises. Five minutes. <span className="italic">Every day.</span>
+          </h2>
+          <p className="mt-6 max-w-2xl text-muted-foreground">
+            Each session is engineered to load a different speaking skill — controlled delivery, structured thinking under pressure, and live verbal editing.
+          </p>
+          <div className="mt-14 grid md:grid-cols-3 gap-8">
+            {[
+              { n: "01", t: "Read aloud", d: "Calibrate pace, clarity, and breath against a fixed passage. Establishes baseline before pressure is applied." },
+              { n: "02", t: "Speak to prompt", d: "Answer a high-stakes prompt in 30 seconds. Trains structured thinking under live load." },
+              { n: "03", t: "Rephrase + deliver", d: "Take a messy sentence. Rewrite it. Say it cleanly. Sharpens spoken editing in real time." },
+            ].map(s => (
+              <div key={s.n} className="card-flat p-8 bg-background">
+                <div className="font-mono text-xs text-accent">{s.n}</div>
                 <div className="font-display text-3xl mt-4">{s.t}</div>
                 <p className="mt-3 text-muted-foreground">{s.d}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* REAL-TIME ANALYSIS */}
+      <section className="hairline border-t border-[hsl(var(--hairline))]">
+        <div className="container-page py-24">
+          <div className="eyebrow mb-3">Real-time analysis</div>
+          <h2 className="font-display text-4xl md:text-5xl max-w-3xl">
+            Four scores. <span className="italic">Every session.</span>
+          </h2>
+          <p className="mt-6 max-w-2xl text-muted-foreground">
+            Every recording is scored on the dimensions that determine whether you sound prepared or improvised.
+          </p>
+          <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-[hsl(var(--hairline))] border border-[hsl(var(--hairline))]">
+            {[
+              { k: "Clarity", v: "88", d: "Sentence length, structure, and listenability. Measures whether the listener can actually follow you." },
+              { k: "Pace", v: "74", d: "Words per minute against the target band. Penalises rushing and dragging." },
+              { k: "Fillers", v: "91", d: "Counts \u201cum\u201d, \u201cuh\u201d, \u201clike\u201d, \u201cyou know\u201d, \u201csort of\u201d. Lower count, higher score." },
+              { k: "Structure", v: "76", d: "Detects clean openings, connective logic, and a firm ending. Rewards delivered shape." },
+            ].map(s => (
+              <div key={s.k} className="bg-background p-8">
+                <div className="eyebrow">{s.k}</div>
+                <div className="mt-3 font-display text-6xl tabular-nums">{s.v}</div>
+                <p className="mt-4 text-sm text-muted-foreground">{s.d}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-10 inline-flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-muted-foreground">
+            <LineChart className="h-3.5 w-3.5" /> Tracked across every session. Trends visible from day one.
           </div>
         </div>
       </section>
@@ -141,10 +203,10 @@ export default function Landing() {
           <h2 className="font-display text-4xl md:text-5xl max-w-3xl">Pick a target. Train against it.</h2>
           <div className="grid md:grid-cols-2 gap-px bg-[hsl(var(--hairline))] mt-14 border border-[hsl(var(--hairline))]">
             {[
-              { t: "Stop Sounding Confused", d: "Eliminate fillers, rambling, and structureless answers.", w: "4 weeks" },
-              { t: "Speak With Authority", d: "Pace, pauses, weight. Sound like the person in the room.", w: "6 weeks" },
-              { t: "Think Faster, Speak Cleaner", d: "Sub-3-second responses. One idea per sentence.", w: "6 weeks" },
-              { t: "High-Stakes Delivery", d: "Boards, keynotes, pitches. Long-form vocal control.", w: "8 weeks" },
+              { t: "Stop Sounding Confused", d: "Cleaner sentences, slower delivery, deliberate thought-to-speech control.", w: "2 weeks" },
+              { t: "Speak With Authority", d: "Stronger vocal delivery, cleaner openings, firmer endings.", w: "4 weeks" },
+              { t: "Think Faster, Speak Cleaner", d: "Sharper spontaneous answers. Less verbal clutter under live questioning.", w: "6 weeks" },
+              { t: "High-Stakes Delivery", d: "Pitch, interview, board, and keynote-grade vocal control.", w: "8 weeks" },
             ].map(p => (
               <div key={p.t} className="bg-background p-8 group">
                 <div className="flex items-center justify-between">
@@ -165,11 +227,36 @@ export default function Landing() {
       <section id="pricing" className="hairline border-t border-[hsl(var(--hairline))]">
         <div className="container-page py-24">
           <div className="eyebrow mb-3">Pricing</div>
-          <h2 className="font-display text-4xl md:text-5xl max-w-3xl">Train free. Upgrade when you're serious.</h2>
+          <h2 className="font-display text-4xl md:text-5xl max-w-3xl">Try it. Then commit.</h2>
           <div className="grid md:grid-cols-2 gap-6 mt-14">
             {[
-              { tier: "Free", price: "£0", per: "forever", features: ["3 sessions / week", "7-day progress history", "1 programme", "Basic feedback"], cta: "Get started", featured: false },
-              { tier: "Pro", price: "£9", per: "per month", features: ["Unlimited daily sessions", "Full progress analytics", "All programmes", "Advanced feedback & trends", "Recording history"], cta: "Start Pro", featured: true },
+              {
+                tier: "Free",
+                price: "£0",
+                per: "forever",
+                features: [
+                  "3 sessions total",
+                  "Limited progress history",
+                  "Core programme only",
+                  "Basic feedback",
+                ],
+                cta: "Start free",
+                featured: false,
+              },
+              {
+                tier: "Pro",
+                price: "£12",
+                per: "per month",
+                features: [
+                  "Unlimited daily sessions",
+                  "Full analytics history",
+                  "All four programmes",
+                  "Premium feedback",
+                  "Recording history",
+                ],
+                cta: "Start Pro",
+                featured: true,
+              },
             ].map(p => (
               <div key={p.tier} className={cn("p-8 border", p.featured ? "border-foreground bg-foreground text-background" : "border-[hsl(var(--hairline))] bg-[hsl(var(--surface))]")}>
                 <div className={cn("eyebrow", p.featured && "text-background/60")}>{p.tier}</div>
@@ -190,31 +277,13 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* TESTIMONIALS */}
-      <section className="hairline border-t border-[hsl(var(--hairline))] bg-[hsl(var(--surface-2))]">
-        <div className="container-page py-24">
-          <div className="eyebrow mb-3">In use by</div>
-          <div className="grid md:grid-cols-3 gap-8 mt-10">
-            {[
-              { q: "Cut my filler rate in half in two weeks. The score is the only thing that finally made me notice.", n: "VP Product, Series-C SaaS" },
-              { q: "Replaced my Sunday-night anxiety prep with a five-minute drill every morning.", n: "Founder, AI startup" },
-              { q: "First tool that treats speaking like a measurable skill instead of a personality trait.", n: "Director, Strategy" },
-            ].map(t => (
-              <figure key={t.n} className="card-flat p-8">
-                <Layers className="h-5 w-5 text-accent" />
-                <blockquote className="mt-4 font-display text-2xl leading-snug">"{t.q}"</blockquote>
-                <figcaption className="mt-6 eyebrow">{t.n}</figcaption>
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="bg-foreground text-background">
-        <div className="container-page py-24 grid md:grid-cols-12 gap-10 items-center">
+      {/* FINAL CTA */}
+      <section className="bg-foreground text-background border-t border-background/10">
+        <div className="container-page py-28 grid md:grid-cols-12 gap-10 items-center">
           <div className="md:col-span-8">
-            <h2 className="font-display text-4xl md:text-6xl tracking-tight">Five minutes. Today. <span className="italic text-accent">Then tomorrow.</span></h2>
+            <h2 className="font-display text-4xl md:text-6xl tracking-tight leading-[1.02]">
+              Stop hoping you sound good. <span className="italic text-accent">Train properly.</span>
+            </h2>
           </div>
           <div className="md:col-span-4 md:text-right">
             <Link to="/auth/sign-up" className="inline-flex items-center gap-2 bg-accent text-background px-6 py-4 hover:bg-accent/90 transition-colors">
