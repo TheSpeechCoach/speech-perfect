@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import AppLayout from "@/components/AppLayout";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
-import { Check, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
@@ -29,7 +29,6 @@ export default function Programmes() {
     const existing = ups.find(u => u.programme_id === programmeId);
     if (!existing) await supabase.from("user_programmes").insert({ user_id: user.id, programme_id: programmeId, active: true });
     else await supabase.from("user_programmes").update({ active: true }).eq("id", existing.id);
-    // deactivate others
     await supabase.from("user_programmes").update({ active: false }).eq("user_id", user.id).neq("programme_id", programmeId);
     toast.success("Programme set");
     load();
@@ -37,13 +36,15 @@ export default function Programmes() {
 
   return (
     <AppLayout>
-      <div className="container-page py-10 md:py-14 space-y-10">
-        <div>
+      <div className="container-page py-12 md:py-20 space-y-12 md:space-y-16">
+        <header className="space-y-3">
           <div className="eyebrow">Programmes</div>
-          <h1 className="font-display text-4xl md:text-5xl mt-2">Pick a target. Train against it.</h1>
-        </div>
+          <h1 className="font-display text-[clamp(2rem,5vw,3.5rem)] leading-[1.05] tracking-tight max-w-2xl">
+            Pick a target. Train against it.
+          </h1>
+        </header>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <ul className="border-t border-[hsl(var(--hairline))]">
           {programmes.map(p => {
             const up = ups.find(u => u.programme_id === p.id);
             const total = (p.weeks || 4) * 7;
@@ -51,46 +52,59 @@ export default function Programmes() {
             const pct = Math.min(100, Math.round((completed / total) * 100));
             const isCurrent = profile?.current_programme_id === p.id;
             return (
-              <div key={p.id} className={cn("p-7 border", isCurrent ? "border-foreground bg-foreground text-background" : "card-flat")}>
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <div className={cn("eyebrow", isCurrent && "text-background/60")}>
-                      {p.weeks} weeks · {p.daily_sessions}× daily
+              <li key={p.id} className="border-b border-[hsl(var(--hairline))]">
+                <div className="grid md:grid-cols-12 gap-6 md:gap-10 py-8 md:py-12 items-start">
+                  <div className="md:col-span-3 space-y-2">
+                    <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                      {p.weeks} wk · {p.daily_sessions}× daily
                     </div>
-                    <h3 className="font-display text-3xl mt-2">{p.title}</h3>
+                    {isCurrent && (
+                      <div className="font-mono text-[10px] uppercase tracking-[0.22em] text-accent">
+                        ● Active
+                      </div>
+                    )}
                   </div>
-                  {isCurrent && <span className="font-mono text-[10px] uppercase tracking-widest text-accent bg-background px-2 py-1">Active</span>}
+                  <div className="md:col-span-6 space-y-4">
+                    <h3 className="font-display text-2xl md:text-3xl leading-tight">{p.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{p.description}</p>
+                    <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
+                      {p.target_outcomes?.map((o: string) => (
+                        <li key={o} className="flex gap-2">
+                          <span className="font-mono text-muted-foreground">—</span>
+                          <span>{o}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    {isCurrent && (
+                      <div className="pt-2 space-y-2">
+                        <div className="flex items-baseline justify-between font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                          <span>{completed} / {total}</span>
+                          <span>{pct}%</span>
+                        </div>
+                        <div className="h-px bg-[hsl(var(--hairline))] relative">
+                          <div className="absolute inset-y-0 left-0 h-px bg-foreground" style={{ width: `${pct}%` }} />
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <div className="md:col-span-3 md:flex md:justify-end">
+                    <button
+                      onClick={() => setActive(p.id)}
+                      disabled={isCurrent}
+                      className={cn(
+                        "inline-flex items-center gap-2 px-5 py-3 transition-colors text-sm font-medium whitespace-nowrap",
+                        isCurrent
+                          ? "text-muted-foreground cursor-default"
+                          : "bg-foreground text-background hover:bg-accent hover:text-accent-foreground"
+                      )}>
+                      {isCurrent ? "Currently active" : <>Make active <ArrowRight className="h-4 w-4" /></>}
+                    </button>
+                  </div>
                 </div>
-                <p className={cn("mt-3 text-sm", isCurrent ? "text-background/70" : "text-muted-foreground")}>{p.description}</p>
-                <ul className="mt-5 space-y-1.5 text-sm">
-                  {p.target_outcomes?.map((o: string) => (
-                    <li key={o} className="flex gap-2"><Check className={cn("h-4 w-4 mt-0.5 shrink-0", isCurrent ? "text-accent" : "text-foreground")} />{o}</li>
-                  ))}
-                </ul>
-                <div className="mt-6">
-                  <div className="flex items-baseline justify-between font-mono text-[11px] uppercase tracking-widest opacity-70">
-                    <span>{completed} / {total}</span>
-                    <span>{pct}%</span>
-                  </div>
-                  <div className={cn("mt-2 h-1", isCurrent ? "bg-background/20" : "bg-[hsl(var(--hairline))]")}>
-                    <div className={cn("h-full", isCurrent ? "bg-accent" : "bg-foreground")} style={{ width: `${pct}%` }} />
-                  </div>
-                </div>
-                <button
-                  onClick={() => setActive(p.id)}
-                  disabled={isCurrent}
-                  className={cn(
-                    "mt-6 inline-flex items-center gap-2 px-5 py-3 transition-colors",
-                    isCurrent
-                      ? "bg-background/10 text-background/60 cursor-default"
-                      : "bg-foreground text-background hover:bg-accent"
-                  )}>
-                  {isCurrent ? "Currently active" : "Make active"} {!isCurrent && <ArrowRight className="h-4 w-4" />}
-                </button>
-              </div>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </div>
     </AppLayout>
   );
