@@ -163,7 +163,7 @@ export default function SessionPage() {
       if (e.code === "Space") {
         e.preventDefault();
         if (rec.state === "recording") rec.stop();
-        else if (rec.state !== "recording") rec.start();
+        else rec.start();
       }
     }
     window.addEventListener("keydown", onKey);
