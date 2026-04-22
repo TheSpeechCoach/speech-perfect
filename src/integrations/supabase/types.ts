@@ -93,6 +93,7 @@ export type Database = {
         Row: {
           audio_path: string | null
           created_at: string
+          display_order: number
           duration_seconds: number
           exercise_type: string
           id: string
@@ -104,6 +105,7 @@ export type Database = {
         Insert: {
           audio_path?: string | null
           created_at?: string
+          display_order?: number
           duration_seconds?: number
           exercise_type: string
           id?: string
@@ -115,6 +117,7 @@ export type Database = {
         Update: {
           audio_path?: string | null
           created_at?: string
+          display_order?: number
           duration_seconds?: number
           exercise_type?: string
           id?: string
@@ -144,6 +147,7 @@ export type Database = {
           id: string
           overall: number
           pace: number
+          pause_count: number
           session_id: string
           structure: number
           user_id: string
@@ -159,6 +163,7 @@ export type Database = {
           id?: string
           overall: number
           pace: number
+          pause_count?: number
           session_id: string
           structure: number
           user_id: string
@@ -174,6 +179,7 @@ export type Database = {
           id?: string
           overall?: number
           pace?: number
+          pause_count?: number
           session_id?: string
           structure?: number
           user_id?: string
@@ -195,7 +201,9 @@ export type Database = {
           duration_seconds: number
           id: string
           programme_id: string | null
+          session_date: string
           started_at: string
+          status: string
           user_id: string
         }
         Insert: {
@@ -203,7 +211,9 @@ export type Database = {
           duration_seconds?: number
           id?: string
           programme_id?: string | null
+          session_date?: string
           started_at?: string
+          status?: string
           user_id: string
         }
         Update: {
@@ -211,7 +221,9 @@ export type Database = {
           duration_seconds?: number
           id?: string
           programme_id?: string | null
+          session_date?: string
           started_at?: string
+          status?: string
           user_id?: string
         }
         Relationships: [
@@ -251,23 +263,59 @@ export type Database = {
       subscriptions: {
         Row: {
           current_period_end: string | null
+          id: string
           status: string
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
           tier: string
           updated_at: string
           user_id: string
         }
         Insert: {
           current_period_end?: string | null
+          id?: string
           status?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
           tier?: string
           updated_at?: string
           user_id: string
         }
         Update: {
           current_period_end?: string | null
+          id?: string
           status?: string
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
           tier?: string
           updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_goals: {
+        Row: {
+          created_at: string
+          goal_description: string | null
+          goal_title: string
+          id: string
+          is_active: boolean
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          goal_description?: string | null
+          goal_title: string
+          id?: string
+          is_active?: boolean
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          goal_description?: string | null
+          goal_title?: string
+          id?: string
+          is_active?: boolean
           user_id?: string
         }
         Relationships: []
@@ -275,26 +323,32 @@ export type Database = {
       user_programmes: {
         Row: {
           active: boolean
+          completed_at: string | null
           completed_sessions: number
           id: string
           programme_id: string
           started_at: string
+          status: string
           user_id: string
         }
         Insert: {
           active?: boolean
+          completed_at?: string | null
           completed_sessions?: number
           id?: string
           programme_id: string
           started_at?: string
+          status?: string
           user_id: string
         }
         Update: {
           active?: boolean
+          completed_at?: string | null
           completed_sessions?: number
           id?: string
           programme_id?: string
           started_at?: string
+          status?: string
           user_id?: string
         }
         Relationships: [
