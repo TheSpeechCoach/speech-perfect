@@ -176,12 +176,13 @@ export default function Landing() {
           <p className="mt-6 max-w-2xl text-muted-foreground">
             Every recording is scored on the dimensions that determine whether you sound prepared or improvised.
           </p>
-          <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-[hsl(var(--hairline))] border border-[hsl(var(--hairline))]">
+          <div className="mt-14 grid md:grid-cols-2 lg:grid-cols-5 gap-px bg-[hsl(var(--hairline))] border border-[hsl(var(--hairline))]">
             {[
               { k: "Clarity", v: "88", d: "Sentence length, structure, and listenability. Measures whether the listener can actually follow you." },
               { k: "Pace", v: "74", d: "Words per minute against the target band. Penalises rushing and dragging." },
               { k: "Fillers", v: "91", d: "Counts \u201cum\u201d, \u201cuh\u201d, \u201clike\u201d, \u201cyou know\u201d, \u201csort of\u201d. Lower count, higher score." },
-              { k: "Structure", v: "76", d: "Detects clean openings, connective logic, and a firm ending. Rewards delivered shape." },
+              { k: "Structure", v: "76", d: "Detects clean openings, connective logic, and a firm ending. Rewards delivered shape." },       
+      { k: "Intonation", v: "82", d: "Pitch variation, stress patterns, and phrase-level expressiveness. Measures whether your delivery holds attention or flattens into monotone." },
             ].map(s => (
               <div key={s.k} className="bg-background p-8">
                 <div className="eyebrow">{s.k}</div>
