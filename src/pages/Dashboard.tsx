@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AppLayout from "@/components/AppLayout";
-import { useAuth } from "@/contexts/AuthContext";h
+import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Mic, ArrowRight } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
