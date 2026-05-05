@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AppLayout from "@/components/AppLayout";
-import { useAuth } from "@/contexts/AuthContext";
+import { useAuth } from "@/contexts/AuthContext";h
 import { supabase } from "@/integrations/supabase/client";
 import { Mic, ArrowRight } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
@@ -165,7 +165,7 @@ export default function Dashboard() {
   );
 }
 
-function Metric({ label, value, unit, divider }: { label: string; value: string; unit?: string; divider?: boolean }) {
+function Metric({ label, value, unit, divider }: { label: string; value: string | number; unit?: string; divider?: boolean }) {
   return (
     <div className={`py-6 md:py-8 ${divider ? "border-l border-[hsl(var(--hairline))] pl-6 md:pl-8" : ""}`}>
       <div className="eyebrow">{label}</div>
